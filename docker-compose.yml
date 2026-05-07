@@ -3,8 +3,8 @@ services:
     container_name: postgres_container
     image: postgres:14
     environment:
-      POSTGRES_USER: stala21
-      POSTGRES_PASSWORD: Stalin@2103
+      POSTGRES_USER: stala
+      POSTGRES_PASSWORD: stala
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
