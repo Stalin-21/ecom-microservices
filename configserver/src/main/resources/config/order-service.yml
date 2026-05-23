@@ -2,8 +2,13 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/order
-    username: stala
-    password: stala
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   jpa:
     show-sql: true
     database: POSTGRESQL
@@ -12,5 +17,10 @@ spring:
         format_sql: true
         ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 server:
   port: 8083
