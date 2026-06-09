@@ -28,6 +28,7 @@ public class UserController {
     //Get a single user
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getSingleUser(@PathVariable String id) {
+        System.out.println("user request received");
         return userServices.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
