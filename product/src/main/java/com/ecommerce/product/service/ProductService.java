@@ -4,6 +4,7 @@ import com.ecommerce.product.dto.ProductRequest;
 import com.ecommerce.product.dto.ProductResponse;
 import com.ecommerce.product.model.Product;
 import com.ecommerce.product.repository.ProductRepository;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +85,11 @@ public class ProductService {
     }
 
 
+    public Optional<ProductResponse> getProductById(String id) {
+
+       return productRepository.findByIdAndActiveTrue(Long.valueOf(id))
+                .map(this::mapToProductResponse);
+
+    }
 
 }
