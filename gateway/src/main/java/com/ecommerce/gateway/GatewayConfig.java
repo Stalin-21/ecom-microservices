@@ -38,5 +38,6 @@ public class GatewayConfig {
                         .path("/eureka/**")
                         .uri("http://localhost:8761"))
                 .build();
+
     }
 }
