@@ -1,10 +1,16 @@
 package com.ecommerce.order.service;
 
+import com.ecommerce.order.client.ProductServiceClient;
+import com.ecommerce.order.client.UserServiceClient;
 import com.ecommerce.order.dto.CartItemRequest;
+import com.ecommerce.order.dto.ProductResponse;
+import com.ecommerce.order.dto.UserResponse;
 import com.ecommerce.order.model.CartItem;
 
 import com.ecommerce.order.repository.CartItemRepository;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +20,35 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CartService {
 
 
     @Autowired
     private CartItemRepository cartItemRepository;
 
+    private final ProductServiceClient productServiceClient;
+
+    private final UserServiceClient userServiceClient;
+
+
     public boolean addToCart(String userId, CartItemRequest request) {
-//        Optional<Product> productOpt = productRepository.findById((request.getProductId()));
-//        if(productOpt.isEmpty())
-//            return false;
-//
-//        Product product = productOpt.get();
-//        if(product.getStockQuantity() < request.getQuantity())
-//            return false;
-//
-//        Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
-//
-//        if(userOpt.isEmpty())
-//            return false;
-//
-//        User user = userOpt.get();
+
+        try {
+            UserResponse userOpt = userServiceClient.getUserDetails(userId);
+            if(userOpt==null)
+                return false;
+            ProductResponse productResponse = productServiceClient.getProductDetails((request.getProductId()));
+
+            if (productResponse.getStockQuantity() < request.getQuantity())
+                return false;
+
+        }catch(FeignException.NotFound ex){
+            return false;
+        }
+
+
+
 //
         CartItem existingCartItem = cartItemRepository.findByUserIdAndProductId(userId, request.getProductId());
         if(existingCartItem != null){
