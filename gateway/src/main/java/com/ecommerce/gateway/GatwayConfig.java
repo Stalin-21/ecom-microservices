@@ -5,22 +5,30 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class GatwayConfig {
 
-    @Bean
+//    @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder){
         return builder.routes()
                 .route("product-service",r -> r
-                        .path("/api/products/**")
+                        .path("/products/**")
+                        .filters(f -> f.rewritePath("/products/?(?<segment>.*)",
+                                "/api/products${segment}"))
                         .uri("lb://PRODUCT-SERVICE"))
 
                 .route("user-service",r -> r
-                        .path("/api/users/**")
+                        .path("/users/**")
+                        .filters(f -> f.rewritePath("/users/?(?<segment>.*)",
+                                "/api/users${segment}"))
                         .uri("lb://USER-SERVICE"))
 
-                .route("order-service",r -> r
-                        .path("/api/orders/**","/api/cart/**")
+                .route("order-service", r -> r
+                        .path("/orders/**", "/cart/**")
+                        .filters(f -> f.rewritePath(
+                                "/(?<segment>orders|cart)(?<remaining>/?.*)",
+                                "/api/${segment}${remaining}"
+                        ))
                         .uri("lb://ORDER-SERVICE"))
                 .route("eureka-service",r -> r
                         .path("/eureka/main")
