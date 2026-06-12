@@ -15,32 +15,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        ddl-auto: create
+        ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-  tracing:
-    sampling:
-      probability: 1.0
 server:
   port: 8083
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
-
-    register-with-eureka: true
-    fetch-registry: true
-logging:
-  file:
-    name: logs/${spring.application.name}.log
-  logback:
-    rollingpolicy:
-      max-file-size: 5MB
-      max-history: 7

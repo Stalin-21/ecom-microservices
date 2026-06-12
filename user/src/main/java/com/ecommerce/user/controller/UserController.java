@@ -3,7 +3,6 @@ package com.ecommerce.user.controller;
 import com.ecommerce.user.dto.UserRequest;
 import com.ecommerce.user.dto.UserResponse;
 import com.ecommerce.user.service.UserServices;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,6 @@ public class UserController {
     //Get a single user
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getSingleUser(@PathVariable String id) {
-        System.out.println("user request received");
         return userServices.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
