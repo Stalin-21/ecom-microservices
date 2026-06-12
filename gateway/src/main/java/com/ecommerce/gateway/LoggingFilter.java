@@ -9,7 +9,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 
-@Component
+//@Component
 public class LoggingFilter implements GatewayFilter {
 
     public static final Logger logger = LoggerFactory.getLogger(LoggingFilter.class);
