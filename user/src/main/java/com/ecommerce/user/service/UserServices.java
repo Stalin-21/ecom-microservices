@@ -39,13 +39,13 @@ public class UserServices {
 
     // Get a single users
     public Optional<UserResponse> getUserById(String id) {
-       return userRepository.findById(String.valueOf(id))
+       return userRepository.findById(id)
                .map(this::mapToUserResponse);
     }
 
     // Update user details
     public boolean userUpdate(String id, UserRequest updatedUserRequest){
-        return userRepository.findById(String.valueOf(id))
+        return userRepository.findById(id)
                 .map(existingUser -> {
                     updateUserFromRequest(existingUser, updatedUserRequest);
                     userRepository.save(existingUser);
