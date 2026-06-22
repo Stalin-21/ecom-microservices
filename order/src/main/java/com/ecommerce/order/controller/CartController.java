@@ -28,7 +28,7 @@ public class CartController {
 
 
     //Add product to cart
-    @CircuitBreaker(name = "productService")
+
     @PostMapping
     public ResponseEntity<String> addToCart(@RequestHeader("X-User-ID") String userId, @RequestBody CartItemRequest request){
         System.out.println("request received");
