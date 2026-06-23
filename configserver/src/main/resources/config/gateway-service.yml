@@ -37,11 +37,30 @@
 #              predicates:
 #                - Path=/eureka/**
 #
-#server:
-#  port: 8080
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ecomBreaker:
+        registerHealthIndicator: true
+        sliding-window-size: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: count_based
