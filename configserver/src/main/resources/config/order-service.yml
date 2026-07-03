@@ -44,3 +44,11 @@ logging:
     rollingpolicy:
       max-file-size: 5MB
       max-history: 7
+
+rabbitmq:
+  queue:
+    name: order.queue
+  exchange:
+    name: order.exchange
+  routing:
+    key: order.tracking
