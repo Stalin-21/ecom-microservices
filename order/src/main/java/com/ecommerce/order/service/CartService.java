@@ -9,6 +9,7 @@ import com.ecommerce.order.model.CartItem;
 
 import com.ecommerce.order.repository.CartItemRepository;
 import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CartService {
 
     private final UserServiceClient userServiceClient;
 
-
+    @CircuitBreaker(name = "productService", fallbackMethod = "addToCartFallBack")
     public boolean addToCart(String userId, CartItemRequest request) {
 
         try {
@@ -66,6 +67,12 @@ public class CartService {
             cartItemRepository.save(cartItem);
         }
         return true;
+    }
+
+    public boolean addToCartFallBack(String userId, CartItemRequest request, Exception exception){
+        System.out.println("Fallback Called");
+        exception.printStackTrace();
+        return false;
     }
 
     public boolean deleteItemFromCart(String userId, String productId) {
