@@ -1,5 +1,6 @@
 package com.ecommerce.order.service;
 
+import com.ecommerce.order.dto.OrderCreatedEvent;
 import com.ecommerce.order.dto.OrderItemDTO;
 import com.ecommerce.order.dto.OrderResponse;
 import com.ecommerce.order.model.*;
@@ -8,24 +9,30 @@ import com.ecommerce.order.repository.OrderRepository;
 import com.ecommerce.order.model.OrderItem;
 import com.ecommerce.order.model.OrderStatus;
 import com.ecommerce.order.model.Order;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    @Autowired
-    private CartService cartService;
-//
-//    @Autowired
-//    private UserRepository userRepository;
+    @Value("${rabbitmq.exchange.name}")
+    private String exchangeName;
+    @Value("${rabbitmq.routing.key}")
+    private String routingKey;
+    private final CartService cartService;
+    private final OrderRepository orderRepository;
+    private final RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private OrderRepository orderRepository;
 
     public Optional<OrderResponse> createOrder(String userId) {
         // validate for cart items
@@ -67,11 +74,35 @@ public class OrderService {
         //clear cart
         cartService.clearCart(userId);
 
+        //publish order created event
+        OrderCreatedEvent event =new OrderCreatedEvent(
+                savedOrder.getId(),
+                savedOrder.getUserId(),
+                savedOrder.getStatus(),
+                mapToOrderItemDTOs(savedOrder.getItems()),
+                savedOrder.getTotalAmount(),
+                savedOrder.getCreatedAt()
+        );
+
+        //configuration for rabbitmq
+        rabbitTemplate.convertAndSend(exchangeName,routingKey,
+              event);
+
         return Optional.of(mapToOrderResponse(savedOrder));
 
 
     }
-
+    // converting OrderItem into OrderItemDTO
+    private List<OrderItemDTO> mapToOrderItemDTOs(List<OrderItem> items){
+        return items.stream()
+                .map(item ->new OrderItemDTO(
+                        item.getId(),
+                        item.getProductId(),
+                        item.getQuantity(),
+                        item.getPrice(),
+                        item.getPrice().multiply(new BigDecimal(item.getQuantity()))
+                ) ).collect(Collectors.toList());
+    }
     private OrderResponse mapToOrderResponse(Order order) {
         return new OrderResponse(
                 order.getId(),
