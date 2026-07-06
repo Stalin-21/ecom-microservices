@@ -182,8 +182,8 @@ Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http:
 	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:614)
 	... 39 more
 
-2026-07-03T11:19:34.014+05:30  WARN 1836 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
-2026-07-03T11:19:34.245+05:30  INFO 1836 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-06-23T15:04:33.371+05:30  WARN 8496 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-06-23T15:04:33.529+05:30  INFO 8496 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
 	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.createResourceAccessException(DefaultRestClient.java:779)
 	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchangeInternal(DefaultRestClient.java:624)
 	at org.springframework.web.client.DefaultRestClient$DefaultRequestBodyUriSpec.exchange(DefaultRestClient.java:572)
@@ -266,6 +266,8 @@ Caused by: org.apache.hc.client5.http.HttpHostConnectException: Connect to http:
 
 2026-07-03T11:19:34.247+05:30  WARN 1836 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
 2026-07-03T11:19:34.248+05:30 ERROR 1836 --- [order-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ORDER-SERVICE/STALA.mshome.net:order-service:8083 - de-registration failedCannot execute request on any known server
+2026-06-23T15:04:33.531+05:30  WARN 8496 --- [order-service] [SpringApplicationShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/ORDER-SERVICE/STALA.mshome.net:order-service:8083": Connect to http://localhost:8761 failed: Connection refused: getsockopt
+2026-06-23T15:04:33.532+05:30 ERROR 8496 --- [order-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_ORDER-SERVICE/STALA.mshome.net:order-service:8083 - de-registration failedCannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.5.jar:2.0.5]
@@ -300,3 +302,4 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
 
 2026-07-03T11:19:34.329+05:30  INFO 1836 --- [order-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2026-06-23T15:04:33.696+05:30  INFO 8496 --- [order-service] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
