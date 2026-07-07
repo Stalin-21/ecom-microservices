@@ -16,12 +16,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="eureka (2)" />
         <module name="eureka (1)" />
         <module name="configserver" />
-        <module name="eureka" />
         <module name="gateway" />
       </profile>
-      <profile name="Annotation profile for notification" enabled="true">
+
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -36,21 +36,15 @@
         <module name="order" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="configdemo" target="17" />
-      <module name="eureka-ecom" target="25" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="configdemo" options="-parameters" />
       <module name="configserver" options="-parameters" />
       <module name="consumer" options="-parameters" />
       <module name="ecom-application" options="-parameters" />
-      <module name="eureka" options="-parameters" />
       <module name="eureka (1)" options="-parameters" />
       <module name="eureka (2)" options="-parameters" />
-      <module name="eureka-ecom" options="-parameters" />
+
       <module name="gateway" options="-parameters" />
       <module name="notification" options="-parameters" />
       <module name="order" options="-parameters" />
