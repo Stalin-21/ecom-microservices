@@ -14,6 +14,7 @@ public class MessageController {
 
     @GetMapping("/message")
     public String message(){
+        System.out.println(message);
         return message;
     }
 }
